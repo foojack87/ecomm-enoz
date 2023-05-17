@@ -2,9 +2,27 @@
 //   res.json(req.method);
 // }
 
-export async function POST(request) {
-  const body = await request.json();
-  console.log(body);
+import { mongooseConnect } from '@/lib/mongoose';
+import { Product } from '@/models/Product';
+import { NextResponse } from 'next/server';
 
-  return new Response('OK');
+export async function POST(request) {
+  await mongooseConnect();
+  const body = await request.json();
+
+  const { title, description, price } = body;
+  const productDoc = await Product.create({
+    title,
+    description,
+    price,
+  });
+
+  return NextResponse.json(productDoc);
+}
+
+export async function GET(request) {
+  await mongooseConnect();
+  const res = await Product.find();
+
+  return NextResponse.json(res);
 }
