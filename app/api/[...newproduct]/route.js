@@ -20,9 +20,22 @@ export async function POST(request) {
   return NextResponse.json(productDoc);
 }
 
-export async function GET(request) {
+export async function GET(request, context) {
   await mongooseConnect();
-  const res = await Product.find();
 
-  return NextResponse.json(res);
+  const {
+    params: {
+      newproduct: [, id],
+    },
+  } = context;
+
+  console.log(id);
+
+  if (id) {
+    const res = await Product.findOne({ _id: id });
+    return NextResponse.json(res);
+  } else {
+    const res = await Product.find();
+    return NextResponse.json(res);
+  }
 }

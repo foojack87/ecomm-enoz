@@ -19,3 +19,19 @@ label {
 .btn-primary {
   @apply bg-yellow-300 px-4 py-1 rounded-md;
 }
+
+table.basic {
+  @apply w-full;
+}
+
+table.basic thead tr td {
+  @apply bg-yellow-100;
+}
+
+table.basic tr td {
+  @apply border border-yellow-500 p-1;
+}
+
+table.basic a {
+  @apply bg-orange-300 text-gray-700 text-sm py-1 px-2 rounded-md flex gap-1 items-center;
+}
