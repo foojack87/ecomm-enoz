@@ -39,3 +39,16 @@ export async function GET(request, context) {
     return NextResponse.json(res);
   }
 }
+
+export async function PUT(request) {
+  await mongooseConnect();
+  const body = await request.json();
+
+  const { title, description, price, _id } = body;
+  const updatedProduct = await Product.updateOne(
+    { _id },
+    { title, description, price }
+  );
+
+  return NextResponse.json(updatedProduct);
+}
