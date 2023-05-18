@@ -52,3 +52,20 @@ export async function PUT(request) {
 
   return NextResponse.json(updatedProduct);
 }
+
+export async function DELETE(request, context) {
+  await mongooseConnect();
+
+  const {
+    params: {
+      newproduct: [, id],
+    },
+  } = context;
+
+  console.log(id);
+
+  if (id) {
+    const res = await Product.deleteOne({ _id: id });
+    return NextResponse.json(res);
+  }
+}
