@@ -7,16 +7,17 @@ const ProductForm = ({
   title: currTitle,
   description: currDescription,
   price: currPrice,
-  images,
+  images: existingImages,
 }) => {
   const [title, setTitle] = useState(currTitle || '');
   const [description, setDescription] = useState(currDescription || '');
   const [price, setPrice] = useState(currPrice || '');
+  const [images, setImages] = useState(existingImages || []);
   const [goToProducts, setGoToProducts] = useState(false);
 
   const saveProduct = async (e) => {
     e.preventDefault();
-    const data = { title, description, price };
+    const data = { title, description, price, images };
     if (_id) {
       //update
       await axios.put('/api/newproduct', { ...data, _id });
@@ -40,6 +41,9 @@ const ProductForm = ({
       try {
         const res = await axios.post('/api/upload', data);
         console.log(res.data);
+        setImages((oldImages) => {
+          return [...oldImages, ...res.data.links];
+        });
       } catch (error) {
         console.error(error);
       }
@@ -58,7 +62,13 @@ const ProductForm = ({
           required
         />
         <label>Photos</label>
-        <div className="mb-2">
+        <div className="flex mb-2 gap-2 items-center">
+          {!!images?.length &&
+            images.map((link) => (
+              <div key={link} className="inline-block h-24">
+                <img src={link} alt="product images" className="rounded-lg" />
+              </div>
+            ))}
           <label className="w-24 h-24 border flex flex-col items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-300 cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +87,6 @@ const ProductForm = ({
             <span>Upload</span>
             <input type="file" onChange={uploadImages} className="hidden" />
           </label>
-          {!images?.length && <div>No images yet</div>}
         </div>
         <label>Item Description</label>
         <textarea

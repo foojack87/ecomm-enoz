@@ -5,12 +5,7 @@ import Nav from '../components/Nav';
 // import { redirect } from 'next/dist/server/api-utils';
 
 export default function Layout({ children }) {
-  const { data: session } = useSession({
-    // required: false,
-    // onUnauthenticated() {
-    //   redirect('/');
-    // },
-  });
+  const { data: session } = useSession({});
 
   if (!session) {
     return (
