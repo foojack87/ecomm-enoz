@@ -10,12 +10,15 @@ export async function POST(request) {
   await mongooseConnect();
   const body = await request.json();
 
-  const { title, description, price, images } = body;
+  const { title, description, price, images, category, productProperties } =
+    body;
   const productDoc = await Product.create({
     title,
     description,
     price,
     images,
+    category,
+    productProperties,
   });
 
   return NextResponse.json(productDoc);
@@ -45,10 +48,18 @@ export async function PUT(request) {
   await mongooseConnect();
   const body = await request.json();
 
-  const { title, description, price, _id, images } = body;
+  const {
+    title,
+    description,
+    price,
+    _id,
+    images,
+    category,
+    productProperties,
+  } = body;
   const updatedProduct = await Product.updateOne(
     { _id },
-    { title, description, price, images }
+    { title, description, price, images, category, productProperties }
   );
 
   return NextResponse.json(updatedProduct);

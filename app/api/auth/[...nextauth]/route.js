@@ -3,6 +3,8 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
+const adminEmails = ['pokegotw@gmail.com'];
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -16,6 +18,15 @@ export const authOptions = {
   // pages: {
   //   signIn: '/signin',
   // },
+  callbacks: {
+    session: ({ session, token, user }) => {
+      if (adminEmails.includes(session?.user?.email)) {
+        return session;
+      } else {
+        return false;
+      }
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
