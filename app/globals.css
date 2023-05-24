@@ -32,15 +32,15 @@ label {
 }
 
 table.basic {
-  @apply w-full;
+  @apply w-full rounded-sm;
 }
 
 table.basic thead tr td {
-  @apply bg-yellow-100;
+  @apply bg-yellow-100 text-sm uppercase border-b border-gray-200 px-4 py-2;
 }
 
 table.basic tr td {
-  @apply border border-yellow-500 p-1;
+  @apply px-4 py-1;
 }
 
 table.basic a {
