@@ -20,10 +20,5 @@ export default function EditProductPage() {
   }, [id]);
 
   console.log(id);
-  return (
-    <>
-      <h1>Edit Item</h1>
-      {productInfo && <ProductForm {...productInfo} />}
-    </>
-  );
+  return <>{productInfo && <ProductForm {...productInfo} />}</>;
 }

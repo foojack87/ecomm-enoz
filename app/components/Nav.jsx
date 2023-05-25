@@ -23,7 +23,7 @@ const Nav = ({ show, setShowNav }) => {
 
   return (
     <aside
-      className={`md:static p-4 fixed md:w-auto w-full transition-all bg-yellow-200 h-full top-0 ${
+      className={`md:static p-4 fixed md:w-auto w-full transition-all bg-gray-200 h-full top-0 ${
         show ? 'left-0' : '-left-full'
       }`}
     >

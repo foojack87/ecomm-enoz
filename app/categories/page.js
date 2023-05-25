@@ -168,7 +168,7 @@ const Categories = () => {
                   placeholder="values, comma separated"
                 />
                 <button
-                  className="btn-default"
+                  className="btn-red"
                   type="button"
                   onClick={() => removeProperty(index)}
                 >
@@ -191,7 +191,7 @@ const Categories = () => {
             Cancel
           </button>
         )}
-        <button type={'submit'} className="btn-primary">
+        <button type={'submit'} className="btn-default">
           Save
         </button>
       </form>
@@ -210,15 +210,15 @@ const Categories = () => {
                 <tr key={cats._id}>
                   <td>{cats.categoryName}</td>
                   <td>{cats?.parentCategory?.categoryName}</td>
-                  <td className="text-center">
+                  <td className="text-center items-center flex flex-col gap-1 sm:gap-0 sm:block">
                     <button
                       onClick={() => editCategory(cats)}
-                      className="btn-primary mr-2"
+                      className="btn-default sm:mr-2"
                     >
                       Edit
                     </button>
                     <button
-                      className="btn-primary"
+                      className="btn-red"
                       onClick={() => deleteCategory(cats)}
                     >
                       Delete

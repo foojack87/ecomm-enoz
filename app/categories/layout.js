@@ -25,7 +25,7 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="bg-yellow-200 min-h-screen ">
+    <div className="bg-gray-200 min-h-screen ">
       <div className="md:hidden flex justify-between px-4">
         <button
           onClick={() => {
@@ -50,7 +50,7 @@ export default function Layout({ children }) {
 
       <div className="flex">
         <Nav show={showNav} setShowNav={setShowNav} />
-        <div className="bg-gray-100 flex-grow mx-2 my-2 rounded-lg p-4">
+        <div className="bg-gray-100 shadow-md flex-grow mx-2 my-2 p-4">
           {children}
         </div>
       </div>

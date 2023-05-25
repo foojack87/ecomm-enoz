@@ -35,10 +35,10 @@ export default function Products() {
           {products.map((product) => (
             <tr key={product._id}>
               <td>{product.title}</td>
-              <td className="text-center">
+              <td className="text-center items-center flex flex-col gap-1 sm:gap-0 sm:block">
                 <Link
                   href={'/products/edit/' + product._id}
-                  className="my-1 md:my-0 flex items-center justify-center w-full md:w-auto"
+                  className="btn-default"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ export default function Products() {
                 </Link>
                 <Link
                   href={'/products/delete/' + product._id}
-                  className="mb-1 md:mb-0 flex items-center justify-center w-full md:w-auto"
+                  className="btn-red"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

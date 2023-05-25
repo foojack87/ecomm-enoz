@@ -147,20 +147,22 @@ const ProductForm = ({
         </select>
         {propertiesToFill?.length > 0 &&
           propertiesToFill.map((p, index) => (
-            <div className="flex gap-1" key={index}>
-              <div>{p.name}</div>
-              <select
-                value={productProperties[p.name]}
-                onChange={(e) =>
-                  changeProductProperties(p.name, e.target.value)
-                }
-              >
-                {p.values.map((v, index) => (
-                  <option value={v} key={index}>
-                    {v}
-                  </option>
-                ))}
-              </select>
+            <div className="" key={index}>
+              <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
+              <div>
+                <select
+                  value={productProperties[p.name]}
+                  onChange={(e) =>
+                    changeProductProperties(p.name, e.target.value)
+                  }
+                >
+                  {p.values.map((v, index) => (
+                    <option value={v} key={index}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           ))}
         <label>Photos</label>
@@ -172,7 +174,10 @@ const ProductForm = ({
           >
             {!!images?.length &&
               images.map((link) => (
-                <div key={link} className="inline-block h-24">
+                <div
+                  key={link}
+                  className="bg-white p-4 h-24 shadow-sm rounded-sm border border-gray-200"
+                >
                   <img src={link} alt="product images" className="rounded-lg" />
                 </div>
               ))}
@@ -182,7 +187,7 @@ const ProductForm = ({
               <Spinner />
             </div>
           )}
-          <label className="w-24 h-24 border flex flex-col items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-300 cursor-pointer">
+          <label className="w-24 h-24 border border-gray-200 flex flex-col items-center justify-center text-sm gap-1 text-gray-500 rounded-sm bg-white shadow-sm cursor-pointer">
             {isUploading ? (
               <div className="animate-spin">
                 <svg
@@ -216,7 +221,7 @@ const ProductForm = ({
                 />
               </svg>
             )}
-            <span>Upload</span>
+            <span>Add Img</span>
             <input type="file" onChange={uploadImages} className="hidden" />
           </label>
         </div>
