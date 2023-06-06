@@ -224,9 +224,7 @@ const ProductForm = ({
                   strokeWidth={1.5}
                   stroke="currentColor"
                   className="w-6 h-6"
-                >
-                  {/* Upload animation */}
-                </svg>
+                ></svg>
               </div>
             ) : (
               <svg
@@ -236,9 +234,7 @@ const ProductForm = ({
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="w-6 h-6"
-              >
-                {/* Upload icon */}
-              </svg>
+              ></svg>
             )}
             <span>Add Img</span>
             <input type="file" onChange={uploadImages} className="hidden" />

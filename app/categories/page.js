@@ -51,9 +51,9 @@ const Categories = () => {
     setCategoryName(cats.categoryName);
     setParentCategory(cats.parentCategory ? cats.parentCategory._id : '');
     setProperties(
-      cats.properties.map((name, values) => ({
-        name,
-        values: values.join(','),
+      cats.properties.map((property) => ({
+        name: property.name,
+        values: Array.isArray(property.values) ? property.values.join(',') : '',
       }))
     );
   };

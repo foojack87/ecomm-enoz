@@ -28,6 +28,7 @@ export default function Home() {
         </h2>
         <span>{session?.user?.email}</span>
       </div>
+      <div>Dashboard here.</div>
     </Layout>
   );
 }

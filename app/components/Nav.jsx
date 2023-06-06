@@ -15,9 +15,6 @@ const Nav = ({ show, setShowNav }) => {
   const pathname = usePathname();
 
   const closeNav = () => {
-    // Call the function to update the show state to false
-    // This will hide the nav bar
-    // Make sure you have access to the setShowNav function from the parent component
     setShowNav(false);
   };
 
@@ -122,8 +119,8 @@ const Nav = ({ show, setShowNav }) => {
           Categories
         </Link>
         <Link
-          href={'/admins'}
-          className={pathname.includes('/admins') ? activeLink : inactiveLink}
+          href={'/users'}
+          className={pathname.includes('/users') ? activeLink : inactiveLink}
           onClick={closeNav}
         >
           <svg
@@ -145,9 +142,9 @@ const Nav = ({ show, setShowNav }) => {
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-          Admins
+          Users
         </Link>
-        <Link
+        {/* <Link
           href={'/settings'}
           className={pathname.includes('/settings') ? activeLink : inactiveLink}
           onClick={closeNav}
@@ -174,7 +171,7 @@ const Nav = ({ show, setShowNav }) => {
             />
           </svg>
           Settings
-        </Link>
+        </Link> */}
 
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
