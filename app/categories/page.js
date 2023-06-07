@@ -1,6 +1,8 @@
 'use client';
+
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Loading from '../components/Loading';
 import Swal from 'sweetalert2';
 
 const Categories = () => {
@@ -9,16 +11,23 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [parentCategory, setParentCategory] = useState('');
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
-    const res = await axios.get('/api/categories/');
-    setCategories(res.data);
+    try {
+      setLoading(true);
+      const res = await axios.get('/api/categories/');
+      setCategories(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
-
   const saveCategory = async (e) => {
     e.preventDefault();
     const data = {
@@ -111,6 +120,7 @@ const Categories = () => {
   return (
     <>
       <h1>Categories</h1>
+
       <label>
         {editting
           ? `Edit Category: ${editting.categoryName}`
@@ -205,7 +215,14 @@ const Categories = () => {
             </tr>
           </thead>
           <tbody>
-            {categories?.length > 0 &&
+            {loading ? (
+              <tr>
+                <td colSpan="3">
+                  <Loading />
+                </td>
+              </tr>
+            ) : (
+              categories?.length > 0 &&
               categories.map((cats) => (
                 <tr key={cats._id}>
                   <td>{cats.categoryName}</td>
@@ -225,7 +242,8 @@ const Categories = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
+              ))
+            )}
           </tbody>
         </table>
       )}
