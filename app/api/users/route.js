@@ -8,7 +8,9 @@ export async function GET(request) {
   await isAdminRequest();
 
   try {
-    const users = await User.find({}, 'name email').sort({ createdAt: -1 });
+    const users = await User.find({}, 'name email createdAt').sort({
+      createdAt: -1,
+    });
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.error(error);
