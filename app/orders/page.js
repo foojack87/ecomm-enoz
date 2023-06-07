@@ -2,15 +2,42 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/orders').then((res) => {
-      setOrders(res.data);
-    });
+    fetchOrders();
   }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('/api/orders');
+      console.log(response.data);
+      setOrders(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteOrder = (order) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Do you want to delete this ${order}?`,
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: '#d55',
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log('Deleting order with id:', order);
+        await axios.delete(`/api/orders/${order}`);
+        fetchOrders();
+      }
+    });
+  };
 
   return (
     <>
@@ -22,6 +49,7 @@ const Orders = () => {
             <th>Paid</th>
             <th>Recipient</th>
             <th>Products</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +72,14 @@ const Orders = () => {
                       <br />
                     </div>
                   ))}
+                </td>
+                <td>
+                  <button
+                    className="text-red-500"
+                    onClick={() => deleteOrder(order._id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

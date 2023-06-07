@@ -2,6 +2,7 @@
 
 import { useSession, signIn } from 'next-auth/react';
 import Layout from './components/Layout';
+import Dashboard from './components/Dashboard';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -28,7 +29,7 @@ export default function Home() {
         </h2>
         <span>{session?.user?.email}</span>
       </div>
-      <div>Dashboard here.</div>
+      <Dashboard />
     </Layout>
   );
 }
