@@ -5,7 +5,13 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession({});
+
+  if (status === 'loading') {
+    return (
+      <div className="bg-gray-200 min-h-screen flex justify-center items-center"></div>
+    );
+  }
 
   if (!session)
     return (

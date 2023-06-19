@@ -7,7 +7,13 @@ import Logo from '../components/Logo';
 
 export default function Layout({ children }) {
   const [showNav, setShowNav] = useState(false);
-  const { data: session } = useSession({});
+  const { data: session, status } = useSession({});
+
+  if (status === 'loading') {
+    return (
+      <div className="bg-gray-200 min-h-screen flex justify-center items-center"></div>
+    );
+  }
 
   if (!session) {
     return (
