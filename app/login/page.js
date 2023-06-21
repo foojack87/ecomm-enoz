@@ -99,14 +99,14 @@ const SignIn = () => {
           >
             Sign In
           </button>
-          <div className="text-sm text-gray-600 mb-4">
+          {/* <div className="text-sm text-gray-600 mb-4">
             Don't have an account?{' '}
             <Link href="/">
               <span className="text-blue-500 hover:underline">
                 Sign up here
               </span>
             </Link>
-          </div>
+          </div> */}
         </div>
       </form>
     </div>
