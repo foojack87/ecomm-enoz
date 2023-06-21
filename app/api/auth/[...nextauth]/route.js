@@ -1,37 +1,50 @@
-import clientPromise from '@/lib/mongodb';
-import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import NextAuth, { getServerSession } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-
-const adminEmails = ['pokegotw@gmail.com'];
+import { mongooseConnect } from '@/lib/mongoose';
+import { Admin } from '@/models/Admin';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcrypt';
 
 export const authOptions = {
-  // Configure one or more authentication providers
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-      authorization: {
-        params: {
-          prompt: 'consent',
-          access_type: 'offline',
-          response_type: 'code',
-        },
+    CredentialsProvider({
+      type: 'credentials',
+      credentials: {},
+      async authorize(credentials, req) {
+        const { email, password } = credentials;
+        await mongooseConnect();
+        console.log('Email:', email);
+        const admin = await Admin.findOne({ email });
+        console.log('Admin:', admin);
+        if (!admin) throw new Error('Admin not found!');
+        const passwordMatch = await bcrypt.compare(password, admin.password);
+        if (!passwordMatch) throw new Error('email/password mismatch!');
+
+        return {
+          name: admin.name,
+          email: admin.email,
+          role: admin.role,
+          id: admin._id,
+        };
       },
     }),
-    // ...add more providers here
   ],
-  adapter: MongoDBAdapter(clientPromise),
-  // pages: {
-  //   signIn: '/signin',
-  // },
   callbacks: {
-    session: ({ session, token, user }) => {
-      if (adminEmails.includes(session?.user?.email)) {
-        return session;
-      } else {
-        return false;
+    jwt(params) {
+      if (params.admin?.role) {
+        params.token.role = params.admin.role;
+        params.token.id = params.admin.id;
       }
+      return params.token;
+    },
+    session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
+      return session;
     },
   },
 };
@@ -40,12 +53,12 @@ const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
 
-export async function isAdminRequest(request, res) {
-  const session = await getServerSession(authOptions);
+// export async function isAdminRequest(request, res) {
+//   const session = await getServerSession(authOptions);
 
-  if (!adminEmails.includes(session?.user?.email)) {
-    res.status(401);
-    res.end();
-    throw 'not an admin';
-  }
-}
+//   if (!adminEmails.includes(session?.user?.email)) {
+//     res.status(401);
+//     res.end();
+//     throw 'not an admin';
+//   }
+// }

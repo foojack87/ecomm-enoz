@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Loading from '../components/Loading';
+import Loading from '../../components/Loading';
 
 const Users = () => {
   const [users, setUsers] = useState([]);

@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { isAdminRequest } from '../auth/[...nextauth]/route';
 import mime from 'mime-types';
 const bucketName = 'ecomm-enoz';
 
 export async function POST(request) {
-  await isAdminRequest();
   const formData = await request.formData();
   const files = formData.getAll('file');
 

@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import Loading from '../components/Loading';
+import Loading from '../../components/Loading';
 import Swal from 'sweetalert2';
 
 const Categories = () => {

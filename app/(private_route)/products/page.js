@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Loading from '../components/Loading';
+import Loading from '@/app/components/Loading';
 
 export default function Products() {
   const [products, setProducts] = useState([]);

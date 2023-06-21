@@ -1,15 +1,10 @@
-// export default function handler(req, res) {
-//   res.json(req.method);
-// }
-
 import { mongooseConnect } from '@/lib/mongoose';
 import { Product } from '@/models/Product';
 import { NextResponse } from 'next/server';
-import { isAdminRequest } from '../auth/[...nextauth]/route';
 
 export async function POST(request) {
   await mongooseConnect();
-  await isAdminRequest();
+
   const body = await request.json();
 
   const { title, description, price, images, category, productProperties } =
@@ -28,7 +23,6 @@ export async function POST(request) {
 
 export async function GET(request, context) {
   await mongooseConnect();
-  await isAdminRequest();
 
   const {
     params: {
@@ -49,7 +43,7 @@ export async function GET(request, context) {
 
 export async function PUT(request) {
   await mongooseConnect();
-  await isAdminRequest();
+
   const body = await request.json();
 
   const {
@@ -71,7 +65,6 @@ export async function PUT(request) {
 
 export async function DELETE(request, context) {
   await mongooseConnect();
-  await isAdminRequest();
 
   const {
     params: {

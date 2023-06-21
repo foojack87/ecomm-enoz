@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import Loading from '../components/Loading';
+import Loading from '../../components/Loading';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);

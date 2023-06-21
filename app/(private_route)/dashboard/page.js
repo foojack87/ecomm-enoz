@@ -59,7 +59,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="h-[100%]">
+      <div className="h-[18rem] flex flex-col sm:h-[100%]">
+        <div className="sm:mb-0 mb-12">{currentDateTime}</div>
         <div className="sm:flex justify-evenly items-center h-[100%]">
           <div className="flex flex-col text-center items-center sm:gap-4">
             <span className="text-xl">New Orders Today</span>
@@ -74,7 +75,6 @@ const Dashboard = () => {
             </span>
           </div>
         </div>
-        <div className="mb-4 sm:mb-0">{currentDateTime}</div>
       </div>
     </>
   );
