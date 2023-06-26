@@ -13,13 +13,19 @@ const SignIn = () => {
     email: '',
     password: '',
   });
-  console.log('Initial UserInfo:', userInfo);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true); // Track email validity
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
+
+    if (name === 'email') {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setIsEmailValid(emailRegex.test(value));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -27,8 +33,13 @@ const SignIn = () => {
     setIsLoading(true);
 
     const { email, password } = userInfo;
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    // Perform validation before submission
+    if (!isEmailValid) {
+      setError('Invalid email format');
+      setIsLoading(false);
+      return;
+    }
 
     const res = await signIn('credentials', {
       email,
@@ -36,8 +47,12 @@ const SignIn = () => {
       redirect: false,
     });
 
-    if (res?.error) return setError(res.error);
-    router.replace('/dashboard');
+    if (res?.error) {
+      setError(res.error);
+      setIsLoading(false);
+    } else {
+      router.replace('/dashboard');
+    }
   };
 
   return (
@@ -61,7 +76,9 @@ const SignIn = () => {
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              !isEmailValid ? 'border-red-500' : ''
+            }`}
             id="email"
             type="email"
             placeholder="Enter your email"
@@ -89,13 +106,13 @@ const SignIn = () => {
             required
           />
         </div>
-        <div className="flex flex-col gap-4 items-center justify-between ">
+        <div className="flex flex-col gap-4 items-center justify-between">
           <button
             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-              isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              isLoading || !isEmailValid ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || !isEmailValid}
           >
             Sign In
           </button>
